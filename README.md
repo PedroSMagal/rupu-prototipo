@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="Logo do R.U.P.U. – Restaurante Universitário Para Universitários" width="560">
+</p>
+
 # R.U.P.U. – Restaurante Universitário Para Universitários
 
 Protótipo navegável de um aplicativo para celular que reúne as informações do Restaurante Universitário (RU) da UESC. O projeto foi desenvolvido como trabalho da disciplina de **Interação Humano-Máquina (IHM)** e tem dois objetivos: resolver um problema real do campus e demonstrar, em uma interface concreta, os conceitos estudados em sala.
@@ -43,7 +47,7 @@ Dessa realidade vieram três prioridades de projeto:
 | **Carteira** | Saldo, QR code de entrada com uso único por refeição, recarga por Pix ou cartão com confirmação e opção de desfazer |
 | **Notícias** | Enquete de cardápio (com resultado após o voto e possibilidade de alterar) e comunicados |
 | **Avisos** | Alertas de fechamento e manutenção, preferências de notificação, dados da conta e contato |
-| **Conta** | Login por matrícula e senha, criação de conta, recuperação de senha pelo e-mail institucional |
+| **Conta** | Login por matrícula e senha, criação de conta só com matrícula e senha (nome e e-mail vêm da base da UESC), recuperação de senha pelo e-mail institucional |
 | **Modo "Ver IHM"** | Botão no topo que marca cada elemento com o princípio de IHM que ele aplica |
 
 ## 3. Decisões de design
@@ -71,18 +75,28 @@ Cores de apoio (neutras e semânticas):
 - **Cada cor tem um significado fixo.** Laranja = "toque aqui"; vermelho = "problema"; azul = "estrutura e marca".
 - **Contraste:** pares de texto/fundo foram escolhidos para atingir o nível AA da WCAG (4,5:1 para texto comum). Os valores foram estimados no projeto e vale confirmar com uma ferramenta de contraste antes da versão final.
 
-### 3.2 Modo escuro
+### 3.2 Logo
+
+O logo do R.U.P.U. (arquivo `assets/logo.png`) mostra um prato com garfo e faca sob um capelo de formatura, com uma curva laranja ao redor. A leitura é direta: **comida + universidade**. As cores do logo (azul em torno de `#014293` e laranja em torno de `#FF9608`) são próximas às da paleta do app, então a marca e a interface parecem uma coisa só.
+
+Como o logo foi usado no app:
+
+- **Telas de entrada (login, cadastro e recuperação de senha):** logo completo no topo, dentro de um **cartão branco**. O logo tem fundo transparente e letras azul-escuras, que perderiam contraste no modo escuro; o cartão branco garante a leitura nos dois temas.
+- **Cabeçalho:** somente o **emblema** (prato + capelo), em um quadrado branco de 46 px ao lado do nome. O logo completo ficaria pequeno demais no celular, e o emblema funciona como ícone de reconhecimento rápido.
+- **Peso da imagem:** as imagens foram reduzidas (logo em 720 px de largura e emblema em 160 px) e convertidas para WebP, ficando em ~40 KB e ~12 KB, embutidas no próprio HTML. Assim o app continua sendo um arquivo único e abre rápido.
+
+### 3.3 Modo escuro
 
 O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azul vira uma versão mais clara (`#7FB0F2`) para manter o contraste sobre o fundo `#0B1220`, e o laranja permanece igual, porque já tem bom contraste nos dois temas. O modo escuro ajuda quem usa o app à noite (jantar) e reduz o cansaço visual.
 
-### 3.3 Tipografia
+### 3.4 Tipografia
 
 - **Atkinson Hyperlegible** (Google Fonts), com fallback para a fonte do sistema.
 - Foi desenhada pelo Braille Institute para **maximizar a distinção entre caracteres parecidos** (como I, l, 1 e O, 0), o que beneficia pessoas com baixa visão e, na prática, todos que leem no celular sob sol ou com pressa.
 - Texto de corpo em 16 px, secundário em 14 px (nunca menor que 12 px) e números grandes em 34 px para os dados que o usuário quer ver "de relance" (timer, fichas, saldo).
 - Números com `tabular-nums`, para que o timer não "pule" a cada segundo.
 
-### 3.4 Layout e navegação
+### 3.5 Layout e navegação
 
 - **Barra de navegação inferior com 5 abas** (Início, Cardápio, Carteira, Notícias, Avisos). No celular, a parte de baixo da tela é a zona alcançada com mais facilidade pelo polegar.
 - **Aba ativa com três sinais:** cor, peso da fonte e uma barra no topo do botão. Assim, a localização do usuário não depende só da cor.
@@ -90,7 +104,7 @@ O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azu
 - **Hierarquia visual:** o dado mais importante de cada cartão é o maior; a explicação fica em texto secundário.
 - **Moldura de celular no computador.** Em telas largas, o app é exibido em uma moldura de 390 px, o que dá noção de como será no aparelho.
 
-### 3.5 Ergonomia
+### 3.6 Ergonomia
 
 - **Alvos de toque de pelo menos 44 px** (botões, chips, itens de lista, aba do menu com 60 px), seguindo as recomendações de Apple e WCAG para reduzir erros de toque.
 - **Ação principal sempre larga** (largura total, 48 px de altura) e na cor de destaque.
@@ -107,7 +121,7 @@ O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azu
 | 2 | Atalhos para usuários frequentes | Botão "Mostrar meu QR code" direto no Início, para quem entra todo dia; o login lembra o formato da matrícula e aceita Enter para entrar |
 | 3 | Feedback informativo | Toast após recarga, aviso de leitura do QR, mensagem após enviar avaliação, contador de itens do filtro |
 | 4 | Diálogos com fechamento | A recarga tem início (escolher valor), meio (confirmar) e fim (aviso "Saldo adicionado"); o cadastro termina com a entrada no app |
-| 5 | Prevenção de erros e tratamento simples | Confirmação antes de pagar, validação do cadastro (9 dígitos, e-mail `@uesc.br`, senhas iguais) com mensagens que dizem como corrigir |
+| 5 | Prevenção de erros e tratamento simples | Confirmação antes de pagar, validação do cadastro (matrícula de 9 dígitos que precisa existir na base, senha mínima) com mensagens que dizem como corrigir |
 | 6 | Reversão fácil de ações | Botão "Desfazer" por 6 segundos após recarga; "Alterar meu voto" na enquete; "Cancelar" na avaliação; "Reiniciar demonstração" |
 | 7 | Locus de controle interno | Pesquisa de satisfação opcional ("Agora não"), notificações configuráveis, filtros que o usuário liga e desliga; o app nunca bloqueia o fluxo principal |
 | 8 | Reduzir carga de memória de curto prazo | Reconhecer em vez de lembrar: o QR substitui senha/ficha, o cardápio mostra o status ao lado de cada item, o filtro exibe contagens e a recarga repete o valor na confirmação |
@@ -140,8 +154,10 @@ O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azu
 ### 5.1 Login, cadastro e recuperação de senha
 
 - **Login por matrícula**, porque é o identificador que o aluno já conhece de cor e que liga a pessoa ao vínculo com a universidade.
-- **Cadastro valida na hora de enviar e junta todos os erros em uma única mensagem**, para o usuário corrigir tudo de uma vez.
-- **E-mail obrigatoriamente `@uesc.br`**, para garantir que só a comunidade acadêmica crie conta.
+- **Cadastro com apenas dois campos: matrícula e senha.** O app busca nome e e-mail institucional na base da UESC a partir da matrícula, o que reduz o esforço de digitação (menos campos, menos erros) e evita dados inconsistentes.
+- **Feedback imediato:** ao digitar uma matrícula existente, o app mostra "✓ Encontramos: Maria" (só o primeiro nome, para expor o mínimo de dados pessoais) e o usuário confirma que é ele mesmo.
+- **Sem campo de repetir senha.** Em vez disso, o botão "Mostrar senha" permite conferir o que foi digitado, o que dá o mesmo efeito de prevenção de erro com um campo a menos.
+- **Mensagens de erro juntas e claras:** matrícula com 9 números, matrícula inexistente na base, matrícula que já tem conta e senha com menos de 6 caracteres.
 - **Recuperação pelo e-mail institucional.** O app mostra o e-mail **mascarado** (`phs***@uesc.br`): confirma ao usuário para onde foi sem expor o endereço inteiro.
 - **"Mostrar senha"** como botão explícito, o que reduz erros de digitação no celular sem forçar o usuário a repetir a senha no login.
 - **Primeiro nome na saudação** ("Olá, Pedro!"): personaliza sem expor o nome completo na tela principal.
@@ -220,6 +236,8 @@ O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azu
 | Nome | Pedro Henrique Soares Magalhães |
 | E-mail | `phsmagalhaes.cic@uesc.br` |
 
+Para testar **Criar conta**, use uma destas matrículas ainda sem conta: `202410130`, `202320045` ou `202510077` (a `202410129` já tem conta).
+
 **Roteiro sugerido**
 
 1. Entre com os dados de teste e confira o "Olá, Pedro!".
@@ -229,7 +247,7 @@ O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azu
 5. Toque em **Simular leitura na catraca** duas vezes: a segunda deve ser recusada.
 6. Em Notícias, vote na enquete e altere o voto.
 7. No Início, avalie o almoço com nota, etiquetas e texto.
-8. Saia da conta e teste **Criar conta** e **Esqueci a senha**.
+8. Saia da conta e teste **Criar conta** (só matrícula e senha) e **Esqueci a senha**.
 9. Toque em **Ver IHM** e confira os princípios em cada tela.
 
 **Testes de usabilidade sugeridos**
@@ -243,6 +261,7 @@ O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azu
 - Não há backend: nada é salvo, enviado ou sincronizado; e-mail de recuperação, Pix e cartão são apenas telas.
 - O QR code não é real e não pode ser lido por leitores.
 - Fila, fichas, cardápio, notícias e votos são dados fixos de exemplo.
+- A "base da UESC" é simulada: apenas 4 matrículas de exemplo existem. Na versão real, a matrícula sozinha **não prova quem a pessoa é** (qualquer um poderia criar conta com a matrícula de outro aluno). Será preciso confirmar a identidade, por exemplo com um código enviado ao e-mail institucional.
 - A senha em texto simples e a caixa "Dados de teste" no login **não podem existir numa versão real**.
 - Cardápio, horários e feriado estão cadastrados apenas para novembro de 2026.
 - Os contrastes de cor foram estimados, não medidos por ferramenta.
@@ -250,7 +269,7 @@ O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azu
 
 ## 10. Próximos passos
 
-- Backend com autenticação segura (senha com hash, recuperação por link com prazo, sessão).
+- Backend com autenticação segura (senha com hash, recuperação por link com prazo, sessão) e integração com a base de alunos da UESC para o cadastro por matrícula, com verificação por código no e-mail institucional.
 - Integração com o sistema do RU para fichas, fila e cardápio em tempo real.
 - Pagamento por Pix e cartão com gateway real e comprovante.
 - QR code dinâmico e de curta duração, validado na catraca.
@@ -265,4 +284,5 @@ O app segue a preferência do sistema (`prefers-color-scheme`). No escuro, o azu
 - Princípios: Ben Shneiderman, *Oito Regras de Ouro do Design de Interfaces*; Jakob Nielsen, *10 Heurísticas de Usabilidade*.
 - Diretrizes de acessibilidade: WCAG 2.x (W3C).
 - Fonte: *Atkinson Hyperlegible*, do Braille Institute.
+- Logo do R.U.P.U.: criado para este projeto (`assets/logo.png`).
 - Projeto acadêmico da disciplina de Interação Humano-Máquina. Nome, marca e dados da UESC pertencem à instituição; este protótipo não é um produto oficial.
