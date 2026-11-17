@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>R.U.P.U. – Restaurante Universitário</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F5FA;--card:#FFFFFF;--ink:#0D1320;--mut:#48556B;--pri:#2259A6;--pri2:#DCE7F6;--cta:#FEA621;--ctaink:#000;--line:#C5D0E0;--ok:#166534;--okbg:#DCF2E3;--warn:#8A4B00;--warnbg:#FFEBC7;--bad:#C2000B;--badbg:#FBDADA;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1220;--card:#141E32;--ink:#EAF0FA;--mut:#A8B6CE;--pri:#7FB0F2;--pri2:#1E3358;--cta:#FEA621;--ctaink:#000;--line:#2C3E5E;--ok:#86E0A6;--okbg:#17402A;--warn:#FFC766;--warnbg:#4A3510;--bad:#FF9A9A;--badbg:#4C1D1D}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#D6DEEB;font-family:'Atkinson Hyperlegible',system-ui,sans-serif;color:var(--ink);font-size:16px;line-height:1.4;display:flex;justify-content:center;align-items:center}
+@media (prefers-color-scheme:dark){body{background:#05080F}}
+#app{width:100%;height:100%;max-width:100%;background:var(--bg);display:flex;flex-direction:column;position:relative;overflow:hidden}
+@media (min-width:500px){#app{width:390px;height:min(820px,96vh);border-radius:34px;box-shadow:0 0 0 10px #1c1c1c,0 20px 50px rgba(0,0,0,.35)}}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;background:var(--pri);color:#fff;border-bottom:4px solid #FEA621}
+@media (prefers-color-scheme:dark){header{background:#1A2F57}}
+header b{font-size:20px;letter-spacing:.5px}
+header small{display:block;font-size:12px;opacity:.9}
+.ihmbtn{background:transparent;border:2px solid #fff;color:#fff;border-radius:20px;padding:6px 12px;font:inherit;font-size:13px;min-height:44px;cursor:pointer}
+.ihmbtn[aria-pressed=true]{background:#fff;color:#2259A6}
+main{flex:1;overflow-y:auto;padding:14px 14px 20px}
+section[hidden]{display:none}
+h2{font-size:20px;margin:6px 0 10px}
+h3{font-size:16px;margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.mut{color:var(--mut);font-size:14px}
+.big{font-size:34px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.badge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:3px 10px;font-size:13px;font-weight:700;white-space:nowrap}
+.b-ok{background:var(--okbg);color:var(--ok)}.b-warn{background:var(--warnbg);color:var(--warn)}.b-bad{background:var(--badbg);color:var(--bad)}
+.bar{height:12px;border-radius:6px;background:var(--pri2);overflow:hidden;margin:8px 0 4px}
+.bar i{display:block;height:100%;background:var(--pri)}
+.lvl{display:flex;gap:5px;margin:8px 0}.lvl i{flex:1;height:12px;border-radius:6px;background:var(--pri2)}.lvl i.on{background:#FEA621}
+button,.btn{font:inherit;cursor:pointer}
+.btn{background:var(--cta);color:var(--ctaink);border:0;border-radius:12px;min-height:48px;padding:10px 16px;font-weight:700;width:100%}
+.btn.sec{background:transparent;color:var(--pri);border:2px solid var(--pri)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px}
+.chip{flex:0 0 auto;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;min-height:44px;padding:6px 14px}
+.chip[aria-pressed=true],.chip[aria-selected=true]{background:var(--pri);border-color:var(--pri);color:#fff}
+@media (prefers-color-scheme:dark){.chip[aria-pressed=true],.chip[aria-selected=true]{color:#0B1220}}
+.item{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-of-type{border-top:0}
+.item .ic{width:44px;height:44px;border-radius:12px;background:var(--pri2);display:grid;place-items:center;font-size:22px}
+.item.off .nm{text-decoration:line-through;color:var(--mut)}
+.tag{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--mut)}
+nav{display:flex;border-top:1px solid var(--line);background:var(--card);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;background:none;border:0;color:var(--mut);min-height:60px;font-size:12px;position:relative;border-top:4px solid transparent}
+nav button span{display:block;font-size:22px}
+nav button[aria-current=page]{color:var(--pri);font-weight:700;border-top-color:var(--pri)}
+.dot{position:absolute;top:6px;left:56%;background:var(--bad);color:#fff;border-radius:10px;font-size:11px;min-width:18px;padding:0 5px}
+:focus-visible{outline:3px solid #2563EB;outline-offset:2px}
+.qr{display:grid;place-items:center;background:#fff;border-radius:12px;padding:12px;margin:10px auto;width:210px}
+.amts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+.stars{display:flex;gap:4px}.stars button{flex:1;min-height:48px;font-size:22px;border:2px solid var(--line);background:var(--card);border-radius:10px;color:var(--ink)}
+.opt{display:flex;align-items:center;gap:10px;min-height:48px;border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin-bottom:8px;background:var(--card);width:100%;text-align:left;color:var(--ink);font:inherit}
+.opt.sel{border-color:var(--pri);background:var(--pri2)}
+.res{position:relative;overflow:hidden;border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.res i{position:absolute;inset:0 auto 0 0;background:var(--pri2);z-index:0}.res span{position:relative;z-index:1;display:flex;justify-content:space-between}
+.sw{display:flex;align-items:center;justify-content:space-between;min-height:52px;gap:10px;border-top:1px solid var(--line)}
+.sw:first-of-type{border-top:0}
+.sw button{width:56px;height:32px;border-radius:16px;border:2px solid var(--mut);background:var(--card);position:relative;flex:none}
+.sw button::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--mut);transition:transform .15s}
+.sw button[aria-checked=true]{background:var(--pri);border-color:var(--pri)}.sw button[aria-checked=true]::after{background:#fff;transform:translateX(24px)}
+.alert{border-left:6px solid var(--bad);background:var(--badbg);color:var(--ink);border-radius:10px;padding:12px;margin-bottom:12px}
+.alert.info{border-color:var(--warn);background:var(--warnbg)}
+#toast,#dlg{position:absolute;left:12px;right:12px;z-index:20}
+#toast{bottom:76px;background:#0D1320;color:#fff;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+#toast button{background:none;border:0;color:#FFC766;font-weight:700;min-height:44px;padding:0 8px}
+#dlg{inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;padding:20px}
+#dlg>div{background:var(--card);border-radius:16px;padding:18px;width:100%}
+#dlg .row{margin-top:14px}
+#dlg[hidden],#toast[hidden]{display:none}
+.ihm [data-h]{outline:2px dashed #B4380B;outline-offset:2px;position:relative}
+.ihm [data-h]::before{content:attr(data-h);position:absolute;top:-11px;left:6px;background:#B4380B;color:#fff;font-size:10.5px;line-height:1.3;padding:1px 6px;border-radius:5px;z-index:9;pointer-events:none}
+input,textarea{width:100%;min-height:48px;border:2px solid var(--line);border-radius:12px;padding:8px 12px;font:inherit;background:var(--card);color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+.seg{display:flex;border:2px solid var(--pri);border-radius:14px;overflow:hidden;margin:4px 0}
+.seg button{flex:1;min-height:58px;border:0;border-left:2px solid var(--pri);background:var(--card);color:var(--ink);font:inherit;font-size:14px;padding:4px}
+.seg button:first-child{border-left:0}
+.ihm .seg{overflow:visible}
+.seg button span{display:block;font-size:20px}
+.seg button[aria-checked=true]{background:var(--pri);color:#fff;font-weight:700}
+@media (prefers-color-scheme:dark){.seg button[aria-checked=true]{color:#0B1220}}
+#auth{display:none;flex:1;overflow-y:auto;padding:16px 16px 24px}
+#app.out #auth{display:block}
+#app.out main,#app.out nav{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app" class="out">
+<header><div><b>R.U.P.U.</b><small>Restaurante Universitário Para Universitários</small></div><button class="ihmbtn" id="ihm" aria-pressed="false" title="Mostra qual princípio de IHM cada elemento aplica">Ver IHM</button></header>
+<div id="auth"></div>
+<main id="main">
+
+<section id="s-home">
+ <h2 id="hello" data-h="Nielsen 2: linguagem do usuário"></h2>
+ <div class="card" data-h="Nielsen 1: visibilidade do estado">
+  <div class="row"><h3 id="mealName">Almoço</h3><span class="badge" id="openBadge"></span></div>
+  <div class="mut" id="timerLabel"></div>
+  <div class="big" id="timer" aria-live="off">--:--:--</div>
+  <div class="mut" id="hours"></div>
+ </div>
+ <div class="card" data-h="Shneiderman 3: feedback informativo">
+  <h3>Fichas do almoço</h3>
+  <div class="row"><span class="big">132</span><span class="badge b-warn">! Restam poucas</span></div>
+  <div class="bar" role="img" aria-label="132 de 400 fichas restantes"><i style="width:33%"></i></div>
+  <div class="mut">132 de 400 fichas · atualizado há 2 min</div>
+ </div>
+ <div class="card" data-h="Nielsen 1 + Gestalt: proximidade">
+  <div class="row"><h3>Fila agora</h3><span class="badge b-warn">Média</span></div>
+  <div class="lvl" role="img" aria-label="Nível 2 de 3"><i class="on"></i><i class="on"></i><i></i></div>
+  <div class="mut">Espera média: <b>12 min</b>. Costuma ficar menor depois das 13h.</div>
+ </div>
+ <button class="btn" data-h="Shneiderman 2: atalho para usuários frequentes" onclick="go('wallet')">Mostrar meu QR code</button>
+ <div class="card" id="survey" style="margin-top:12px" data-h="Controle do usuário: opcional">
+  <h3>Como foi o almoço de hoje?</h3>
+  <div class="stars" id="stars"></div>
+  <div id="svMore" hidden style="margin-top:10px"><label for="why" style="display:block;font-weight:700;margin-bottom:4px">Por que essa nota? (opcional)</label><div class="chips" id="tags"></div><textarea id="why" maxlength="300" placeholder="Ex.: o feijão estava ótimo, mas a fila demorou."></textarea><button class="btn" id="svSend" style="margin-top:8px">Enviar avaliação</button></div>
+  <div class="row" style="margin-top:8px"><span class="mut" id="svMsg">Opcional. Leva 5 segundos.</span><button class="chip" id="skip">Agora não</button></div>
+ </div>
+</section>
+
+<section id="s-menu" hidden>
+ <h2>Cardápio</h2>
+ <div class="chips" id="days" role="tablist" aria-label="Dia"></div>
+ <div class="chips" id="meals" role="tablist" aria-label="Refeição"></div>
+ <div class="seg" role="radiogroup" aria-label="Tipo de refeição" id="diets" data-h="Nielsen 1, 6 e 7: estado visível, reconhecer e flexibilidade"></div>
+ <div class="mut" id="fcount" role="status" style="margin:8px 2px 10px"></div>
+ <div class="card" id="menuList" data-h="Reconhecer em vez de lembrar"></div>
+</section>
+
+<section id="s-wallet" hidden>
+ <h2>Minha carteira</h2>
+ <div class="card"><div class="mut">Saldo disponível</div><div class="big" id="bal">R$ 18,50</div><div class="mut">Cada refeição custa R$ 1,00</div></div>
+ <div class="card" data-h="Nielsen 6: reconhecer, não lembrar">
+  <h3>QR code de entrada</h3>
+  <div class="row"><span class="mut" id="qrMeal"></span><span class="badge" id="qrBadge"></span></div>
+  <div class="qr" id="qr" role="img" aria-label="QR code pessoal para a catraca"></div>
+  <div class="mut" style="text-align:center" id="qrNote"></div>
+  <button class="btn sec" id="scan" style="margin-top:10px">Simular leitura na catraca</button>
+  <div class="mut" style="text-align:center;margin-top:6px">Só no protótipo. Cada QR vale uma leitura por refeição.</div><div style="text-align:center"><button class="chip" id="rst">Reiniciar demonstração</button></div>
+ </div>
+ <div class="card" data-h="Shneiderman 5: evitar erros / 6: desfazer">
+  <h3>Adicionar saldo</h3>
+  <div class="mut">Forma de pagamento</div><div class="seg" id="pay" role="radiogroup" aria-label="Forma de pagamento"></div>
+  <div class="amts" id="amts"></div>
+  <div class="mut">Você confirma antes de pagar e pode desfazer logo depois.</div>
+ </div>
+</section>
+
+<section id="s-news" hidden>
+ <h2>Notícias e enquetes</h2>
+ <div class="card" data-h="Participação do usuário">
+  <h3>O que você quer no almoço de quinta?</h3>
+  <div id="poll"></div>
+ </div>
+ <div class="card"><h3>RU fecha mais tarde no Circuito das Profissões</h3><p class="mut" style="margin:0">Por causa do Circuito das Profissões, o RU vai fechar mais tarde para atender quem estiver no evento. O horário exato será divulgado aqui e na aba Avisos.</p></div>
+ <div class="card"><h3>Novo: opção vegetariana todos os dias</h3><p class="mut" style="margin:0">A partir desta semana, almoço e jantar têm uma proteína vegetal fixa.</p></div>
+</section>
+
+<section id="s-info" hidden>
+ <h2>Avisos</h2>
+ <div class="alert" data-h="Nielsen 9: ajudar a reconhecer e agir"><b>Sexta, 20/11: RU fechado</b><br>Feriado da Consciência Negra. Volta a abrir segunda, 23/11, às 7h.</div>
+ <div class="alert info"><b>Hoje: Fabrício não está no R.U., podem comer a toscana de vocês em paz</b><br>Se acabar, a água continua disponível.</div>
+ <div class="card" data-h="Controle e liberdade do usuário">
+  <h3>Avise-me quando</h3>
+  <div id="prefs"></div>
+ </div>
+ <div class="card"><h3>Minha conta</h3><div class="mut" id="acct"></div><button class="btn sec" id="out" style="margin-top:10px">Sair da conta</button></div>
+ <div class="card"><h3>Contato</h3><p class="mut" style="margin:0">Dúvidas ou reclamações: ru@uesc.br (exemplo). Atendimento das 8h às 17h.</p></div>
+</section>
+
+</main>
+<nav aria-label="Navegação principal" id="nav"></nav>
+<div id="toast" hidden></div>
+<div id="dlg" hidden role="dialog" aria-modal="true" aria-labelledby="dt"><div><h3 id="dt"></h3><p class="mut" id="dd" style="margin:0"></p><div class="row"><button class="btn sec" id="no">Cancelar</button><button class="btn" id="yes">Confirmar</button></div></div></div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const tabs=[['home','🏠','Início'],['menu','🍽️','Cardápio'],['wallet','💳','Carteira'],['news','📰','Notícias'],['info','🔔','Avisos']];
+let cur='home';
+function go(t){cur=t;tabs.forEach(([k])=>$('#s-'+k).hidden=k!==t);$('#main').scrollTop=0;drawNav();if(t==='wallet')qrUI()}
+function drawNav(){$('#nav').innerHTML=tabs.map(([k,i,l])=>`<button ${k===cur?'aria-current="page"':''} onclick="go('${k}')"><span aria-hidden="true">${i}</span>${l}${k==='info'?'<b class="dot" aria-label="2 avisos">2</b>':''}</button>`).join('')}
+$('#ihm').onclick=e=>{const on=e.target.getAttribute('aria-pressed')!=='true';e.target.setAttribute('aria-pressed',on);$('#app').classList.toggle('ihm',on);document.body.classList.toggle('ihm',on)};
+
+/* Timer */
+const meals=[['Café da manhã',7,0,9,0],['Almoço',11,0,14,0],['Jantar',18,0,20,0]];
+let curMeal='';function tick(){const n=new Date(),at=(d,h,m)=>{const x=new Date(n);x.setDate(n.getDate()+d);x.setHours(h,m,0,0);return x};
+ const ok=d=>{const x=at(d,0,0);return x.getDay()%6!==0&&!(x.getMonth()===10&&x.getDate()===20)};
+ let open=null,next=null;
+ for(let d=0;d<5&&!next&&!open;d++){if(!ok(d))continue;for(const m of meals){const a=at(d,m[1],m[2]),b=at(d,m[3],m[4]);if(n>=a&&n<b){open={m,b};break}if(a>n){next={m,a};break}}}
+ curMeal=open?open.m[0]:next?next.m[0]:'Almoço';const f=ms=>{let s=Math.max(0,Math.floor(ms/1000)),h=Math.floor(s/3600),mi=Math.floor(s%3600/60);s%=60;return[h,mi,s].map(v=>String(v).padStart(2,'0')).join(':')};
+ const bd=$('#openBadge');
+ if(open){$('#mealName').textContent=open.m[0];bd.className='badge b-ok';bd.textContent='✓ Aberto';$('#timerLabel').textContent='Fecha em';$('#timer').textContent=f(open.b-n);$('#hours').textContent=`Hoje: ${open.m[1]}h${String(open.m[2]).padStart(2,'0')} às ${open.m[3]}h${String(open.m[4]).padStart(2,'0')}`}
+ else if(next){$('#mealName').textContent=next.m[0];bd.className='badge b-bad';bd.textContent='✕ Fechado';$('#timerLabel').textContent='Abre em';$('#timer').textContent=f(next.a-n);$('#hours').textContent=`Horário: ${next.m[1]}h${String(next.m[2]).padStart(2,'0')} às ${next.m[3]}h${String(next.m[4]).padStart(2,'0')}`}}
+tick();setInterval(tick,1000);
+
+/* Satisfação */
+$('#stars').innerHTML=['Ruim','Regular','Bom','Ótimo','Excelente'].map((l,i)=>`<button aria-label="${i+1} de 5: ${l}" data-v="${i+1}">${'★'}<span style="display:block;font-size:10px">${i+1}</span></button>`).join('');
+$('#stars').onclick=e=>{const b=e.target.closest('button');if(!b)return;const v=+b.dataset.v;[...$('#stars').children].forEach(x=>{const on=+x.dataset.v<=v;x.style.background=on?'#FEA621':'';x.style.color=on?'#000':'';x.style.borderColor=on?'#FEA621':''});$('#svMore').hidden=false;$('#svMsg').textContent='Nota '+v+' de 5. Falta só enviar.';$('#skip').textContent='Cancelar'};
+$('#tags').innerHTML=['Sabor','Temperatura','Quantidade','Fila','Limpeza'].map(t=>`<button class="chip" aria-pressed="false">${t}</button>`).join('');
+$('#tags').onclick=e=>{const b=e.target.closest('button');if(b)b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')};
+$('#svSend').onclick=()=>{$('#svMore').hidden=true;$('#stars').style.display='none';$('#svMsg').textContent='Obrigado! Sua avaliação foi enviada.';$('#skip').textContent='Fechar'};
+$('#skip').onclick=()=>$('#survey').hidden=true;
+
+/* Cardápio */
+const dias=[['Hoje','ter 17'],['Qua','18'],['Qui','19'],['Sex','20'],['Seg','23']];
+const S={ok:['b-ok','✓ Tem'],low:['b-warn','! Acabando'],out:['b-bad','✕ Acabou']};
+const base=[['Arroz branco','Acompanhamento','','ok','🍚'],['Feijão carioca','Acompanhamento','','ok','🫘'],['Salada de alface e tomate','Salada','','ok','🥗']];
+const M={
+0:{Almoço:[...base,['Frango grelhado','Carne','T','low','🍗'],['Bife acebolado','Carne','T','out','🥩'],['Hambúrguer de grão-de-bico','Proteína vegetal','V','ok','🌱'],['Suco de caju','Bebida','','low','🧃']],
+ 'Café da manhã':[['Pão com margarina','Pães','','ok','🍞'],['Ovos mexidos','Proteína','','ok','🍳'],['Café com leite','Bebida','','ok','☕'],['Mamão','Fruta','','ok','🍈']],
+ Jantar:[['Sopa de legumes','Prato principal','V','ok','🍲'],['Macarrão ao sugo','Acompanhamento','','ok','🍝'],['Carne moída','Carne','T','ok','🥩'],['Proteína de soja refogada','Proteína vegetal','V','ok','🌱']]},
+1:{c:[['Peixe assado','T','🐟'],['Quibe de abóbora','V','🎃']]},2:{c:[['Strogonoff de frango','T','🍛'],['Strogonoff de cogumelos','V','🍄']]},4:{c:[['Feijoada','T','🥘'],['Feijoada vegetariana','V','🥘']]}};
+const st={d:0,m:'Almoço',f:'Todos'};
+function chips(id,arr,key,role){$(id).innerHTML=arr.map(a=>{const v=Array.isArray(a)?a[0]:a,l=Array.isArray(a)?`${a[0]} <small>${a[1]}</small>`:a,on=st[key]===(key==='d'?arr.indexOf(a):v);return `<button class="chip" ${role?'role="tab" aria-selected':'aria-pressed'}="${on}" data-v="${key==='d'?arr.indexOf(a):v}">${l}</button>`}).join('');
+ $(id).onclick=e=>{const b=e.target.closest('button');if(!b)return;st[key]=key==='d'?+b.dataset.v:b.dataset.v;draw()}}
+function items(){const d=st.d;if(d===3)return null;if(d===0)return M[0][st.m];if(st.m!=='Almoço'&&st.m!=='Jantar')return [['Pão com margarina','Pães','','ok','🍞'],['Café com leite','Bebida','','ok','☕'],['Fruta da estação','Fruta','','ok','🍎']];
+ const c=(M[d]||M[1]).c;return [...base,...c.map(x=>[x[0],x[1]==='V'?'Proteína vegetal':'Carne',x[1],'ok',x[2]]),['Suco da estação','Bebida','','ok','🧃']]}
+function draw(){chips('#days',dias,'d',1);chips('#meals',['Café da manhã','Almoço','Jantar'],'m',1);
+ let l=items();if(!l){$('#diets').innerHTML='';$('#fcount').textContent='';$('#menuList').innerHTML='<div class="alert" style="margin:0"><b>RU fechado</b><br>Feriado da Consciência Negra. Veja a aba Avisos.</div>';return}
+ const cnt=k=>l.filter(i=>k==='Todos'||!i[2]||i[2]===k[0]).length;const F=[['Todos','🍽️'],['Vegetariano','🌱'],['Tradicional','🍗']];$('#diets').innerHTML=F.map(([k,ic])=>`<button role="radio" aria-checked="${st.f===k}" data-v="${k}"><span aria-hidden="true">${ic}</span>${k} (${cnt(k)})</button>`).join('');$('#diets').onclick=e=>{const b=e.target.closest('button');if(b){st.f=b.dataset.v;draw()}};const f=st.f;l=l.filter(i=>f==='Todos'||!i[2]||(f==='Vegetariano'?i[2]==='V':i[2]==='T'));
+ const hoje=st.d===0;$('#fcount').textContent=(f==='Todos'?l.length+' itens no cardápio.':l.length+' itens para '+(f==='Vegetariano'?'vegetarianos.':'tradicional (com carne).'))+' Itens sem etiqueta servem a todos.';
+ $('#menuList').innerHTML=(hoje?'':'<div class="mut" style="margin-bottom:6px">Cardápio previsto. A disponibilidade aparece no dia.</div>')+(l.length?l.map(i=>`<div class="item ${i[3]==='out'?'off':''}"><div class="ic" aria-hidden="true">${i[4]}</div><div style="flex:1"><div class="nm">${i[0]}</div><div class="mut">${i[1]} ${i[2]==='V'?'<span class="tag">Vegetariano</span>':i[2]==='T'?'<span class="tag">Tradicional</span>':''}</div></div>${hoje?`<span class="badge ${S[i[3]][0]}">${S[i[3]][1]}</span>`:''}</div>`).join(''):'<p class="mut">Nenhum item neste filtro. Escolha “Todos”.</p>')}
+draw();
+
+/* Carteira */
+let qrSvg='',used={};(function(){let s=7,r=()=>(s=(s*9301+49297)%233280)/233280,n=21,c='';const fx=(x,y)=>[[0,0],[n-7,0],[0,n-7]].some(([a,b])=>x>=a&&x<a+7&&y>=b&&y<b+7);
+ for(let y=0;y<n;y++)for(let x=0;x<n;x++){let on;if(fx(x,y)){const [a,b]=x<7&&y<7?[0,0]:x>=14?[14,0]:[0,14],i=x-a,j=y-b;on=i===0||i===6||j===0||j===6||(i>=2&&i<=4&&j>=2&&j<=4)}else on=r()>.52;if(on)c+=`<rect x="${x}" y="${y}" width="1" height="1"/>`}
+ qrSvg=`<svg viewBox="0 0 21 21" width="186" height="186" fill="#000" shape-rendering="crispEdges">${c}</svg>`})();
+let saldo=18.5;let pm='Pix';function payUI(){$('#pay').innerHTML=[['Pix','⚡'],['Cartão','💳']].map(([k,i])=>`<button role="radio" aria-checked="${pm===k}" data-v="${k}"><span aria-hidden="true">${i}</span>${k}</button>`).join('')}payUI();$('#pay').onclick=e=>{const b=e.target.closest('button');if(b){pm=b.dataset.v;payUI()}};const fm=v=>'R$ '+v.toFixed(2).replace('.',',');
+$('#amts').innerHTML=[10,20,50].map(v=>`<button class="btn sec" data-v="${v}">+ R$ ${v}</button>`).join('');
+$('#amts').onclick=e=>{const b=e.target.closest('button');if(!b)return;const v=+b.dataset.v;
+ $('#dt').textContent='Adicionar '+fm(v)+'?';$('#dd').textContent='Pagamento por '+(pm==='Pix'?'Pix':'cartão')+'. Saldo depois: '+fm(saldo+v)+'.';$('#dlg').hidden=false;$('#no').focus();
+ $('#no').onclick=()=>$('#dlg').hidden=true;
+ $('#yes').onclick=()=>{$('#dlg').hidden=true;saldo+=v;$('#bal').textContent=fm(saldo);toast('Saldo adicionado: '+fm(v),()=>{saldo-=v;$('#bal').textContent=fm(saldo);toast('Recarga desfeita')})}};
+let tt;function toast(m,undo){const t=$('#toast');t.hidden=false;t.innerHTML=`<span>${m}</span>${undo?'<button id="un">Desfazer</button>':''}`;if(undo)$('#un').onclick=()=>{clearTimeout(tt);undo()};clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,6000)}
+
+/* Enquete */
+let vote=null;const opts=[['Frango à parmegiana',48],['Lasanha de berinjela',31],['Peixe frito',21]];
+function poll(){const tot=opts.reduce((a,o)=>a+o[1],0)+(vote!==null?1:0);
+ $('#poll').innerHTML=vote===null?opts.map((o,i)=>`<button class="opt" onclick="vote=${i};poll()">○ ${o[0]}</button>`).join('')+'<div class="mut">Seu voto é anônimo.</div>'
+ :opts.map((o,i)=>{const v=o[1]+(vote===i?1:0),p=Math.round(v/tot*100);return `<div class="res"><i style="width:${p}%"></i><span><span>${vote===i?'● ':''}${o[0]}</span><b>${p}%</b></span></div>`}).join('')+'<button class="chip" onclick="vote=null;poll()">Alterar meu voto</button>'}
+poll();
+
+/* Preferências */
+const pr=[['Fichas estiverem acabando',1],['O RU for abrir (15 min antes)',1],['A fila estiver abaixo de 10 min',0],['Houver aviso de fechamento',1]];
+function prefs(){$('#prefs').innerHTML=pr.map((p,i)=>`<div class="sw"><span id="p${i}">${p[0]}</span><button role="switch" aria-checked="${!!p[1]}" aria-labelledby="p${i}" onclick="pr[${i}][1]^=1;prefs()"></button></div>`).join('')}
+prefs();drawNav();
+const dk=()=>curMeal+new Date().toDateString();
+function qrUI(){const u=used[dk()],b=$('#qrBadge');$('#qrMeal').textContent='Válido para: '+curMeal.toLowerCase()+' de hoje';if(u){b.className='badge b-bad';b.textContent='✕ Já usado';$('#qr').innerHTML='<div style="width:186px;height:186px;display:grid;place-items:center;text-align:center;color:#333;background:#E3E3E3;font-size:14px;padding:10px">QR já lido no '+curMeal.toLowerCase()+'. Um novo QR vale na próxima refeição.</div>';$('#qrNote').textContent='Lido às '+u+'.'}else{b.className='badge b-ok';b.textContent='✓ 1 uso disponível';$('#qr').innerHTML=qrSvg;$('#qrNote').textContent='Mostre na catraca. Aumente o brilho da tela.'}}
+$('#scan').onclick=()=>{if(used[dk()])return toast('QR já lido neste '+curMeal.toLowerCase()+'. Cada QR vale uma vez por refeição.');if(saldo<1)return toast('Saldo insuficiente. Adicione saldo abaixo.');saldo-=1;$('#bal').textContent=fm(saldo);used[dk()]=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});qrUI();toast('Entrada liberada. R$ 1,00 debitado.')};
+$('#rst').onclick=()=>{used={};qrUI();toast('Demonstração reiniciada')};
+
+/* Login */
+const users=[{mat:'202410129',email:'phsmagalhaes.cic@uesc.br',pass:'123456',name:'Pedro Henrique Soares Magalhães'}],A=$('#auth');
+const fld=(id,l,t,p,x='')=>`<label for="${id}" style="display:block;font-weight:700;margin:12px 0 4px">${l}</label><input id="${id}" type="${t}" placeholder="${p}" ${x}>`;
+const er=t=>`<div class="alert" role="alert" style="margin:12px 0 0">${t}</div>`;
+function enter(u){$('#hello').textContent='Olá, '+u.name.split(' ')[0]+'!';$('#acct').textContent=u.name+' · matrícula '+u.mat;$('#app').classList.remove('out');go('home')}
+$('#out').onclick=()=>{$('#app').classList.add('out');auth('login')};
+function auth(v,x){
+ if(v==='login'){A.innerHTML=`<h2>Entrar</h2><p class="mut" style="margin:0">Use sua matrícula e a senha que você criou.</p><div data-h="Nielsen 9: mensagens de erro claras">${fld('mat','Matrícula','text','Ex.: 202410129','inputmode="numeric" maxlength="12" autocomplete="username"')}${fld('pw','Senha','password','Sua senha','autocomplete="current-password"')}<div id="err"></div></div><button class="chip" id="eye" style="margin-top:8px">Mostrar senha</button><button class="btn" id="go" style="margin-top:14px">Entrar</button><div class="row" style="margin-top:14px"><button class="chip" id="toF">Esqueci a senha</button><button class="chip" id="toS">Criar conta</button></div><div class="card" style="margin-top:16px"><b>Dados de teste</b><div class="mut">Matrícula 202410129 · Senha 123456</div></div>`;
+  $('#eye').onclick=e=>{const p=$('#pw'),s=p.type==='password';p.type=s?'text':'password';e.target.textContent=s?'Ocultar senha':'Mostrar senha'};
+  $('#go').onclick=()=>{const m=$('#mat').value.trim(),p=$('#pw').value,u=users.find(a=>a.mat===m&&a.pass===p);$('#err').innerHTML=!m||!p?er('Preencha matrícula e senha.'):!u?er('Matrícula ou senha incorreta. Confira os dados ou toque em “Esqueci a senha”.'):'';if(u)enter(u)};
+  $('#pw').onkeydown=e=>{if(e.key==='Enter')$('#go').click()};$('#toF').onclick=()=>auth('forgot');$('#toS').onclick=()=>auth('sign')}
+ else if(v==='forgot'){A.innerHTML=`<h2>Recuperar senha</h2><p class="mut" style="margin:0">Informe sua matrícula. Enviaremos um link para o seu e-mail institucional.</p>${fld('mat','Matrícula','text','Ex.: 202410129','inputmode="numeric" maxlength="12"')}<div id="err"></div><button class="btn" id="go" style="margin-top:14px">Enviar link</button><button class="chip" id="back" style="margin-top:12px">Voltar para entrar</button>`;
+  $('#back').onclick=()=>auth('login');
+  $('#go').onclick=()=>{const u=users.find(a=>a.mat===$('#mat').value.trim());if(!u)return $('#err').innerHTML=er('Não encontramos essa matrícula. Confira o número ou crie uma conta.');const m=u.email;auth('sent',m.slice(0,3)+'***'+m.slice(m.indexOf('@')))}}
+ else if(v==='sent'){A.innerHTML=`<h2>Verifique seu e-mail</h2><div class="alert info" role="status"><b>Link enviado</b><br>Mandamos as instruções para ${x}. Se não encontrar, olhe a caixa de spam.</div><button class="btn" id="back">Voltar para entrar</button>`;$('#back').onclick=()=>auth('login')}
+ else{A.innerHTML=`<h2>Criar conta</h2>${fld('nm','Nome completo','text','Ex.: Maria Souza','autocomplete="name"')}${fld('mat','Matrícula','text','9 números','inputmode="numeric" maxlength="9"')}${fld('em','E-mail institucional','email','nome@uesc.br')}${fld('pw','Crie uma senha','password','Mínimo 6 caracteres')}${fld('pw2','Repita a senha','password','Mesma senha')}<div id="err"></div><button class="btn" id="go" style="margin-top:14px">Criar conta</button><button class="chip" id="back" style="margin-top:12px">Já tenho conta</button>`;
+  $('#back').onclick=()=>auth('login');
+  $('#go').onclick=()=>{const g=id=>$('#'+id).value.trim(),n=g('nm'),m=g('mat'),em=g('em').toLowerCase(),p=$('#pw').value,e=[];
+   if(n.split(' ').length<2)e.push('Digite nome e sobrenome.');if(!/^\d{9}$/.test(m))e.push('A matrícula tem 9 números.');else if(users.some(a=>a.mat===m))e.push('Essa matrícula já tem conta. Entre ou recupere a senha.');if(!/^[^@\s]+@uesc\.br$/.test(em))e.push('Use seu e-mail institucional, terminado em @uesc.br.');if(p.length<6)e.push('A senha precisa de pelo menos 6 caracteres.');if(p!==$('#pw2').value)e.push('As senhas não são iguais.');
+   if(e.length)return $('#err').innerHTML=er(e.join('<br>'));const u={mat:m,email:em,pass:p,name:n};users.push(u);enter(u)}}
+ A.scrollTop=0}
+auth('login');
+</script>
+</body>
+</html>
